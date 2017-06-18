@@ -14,14 +14,23 @@ public class TradeGenerator {
         idGen = new Random();
     }
 
-    public void putOrder(String productName, String userName, int notional){
+    public Trade putOrder(String productName, String userName, int notional){
         Trade trade = new Trade();
         trade.setTradeId(idGen.nextInt());
         trade.setTradeVersion(1);
         trade.setProductName(productName);
         trade.setUserName(userName);
         trade.setNotional(notional);
+        return trade;
+    }
 
-
+    public Trade generateDemoOrder(){
+        Trade trade = new Trade();
+        trade.setTradeId(idGen.nextInt());
+        trade.setTradeVersion(1);
+        trade.setProductName("Demo Product");
+        trade.setUserName("Demo User");
+        trade.setNotional(100000);
+        return trade;
     }
 }
