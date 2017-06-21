@@ -22,15 +22,17 @@ public class RequestController {
 
     @ApiOperation(value="生成RequestID")
     @RequestMapping(value = "/trade/requestID", method = RequestMethod.POST)
-    public RequestID demoOrder(@RequestBody RequestIDParam requestParam) throws UnknownHostException {
+    public RequestID demoOrder(@RequestBody RequestIDParam requestParam,
+    @RequestParam(value = "请求时间", defaultValue = "20170101") String timestamp) throws UnknownHostException {
         RequestID requestID = new RequestID();
         requestID.setRequestID(requestIDGenerator.generateRequestID());
 
         InetAddress address = InetAddress.getLocalHost();
         requestID.setHostName(address.getHostAddress());
 
-        requestID.setOriginatingSourceSystem(requestParam.getOriginatingSourceSystem());
-        requestID.setApiVersion(requestParam.getApiVersion());
+        requestID.setOriginatingSourceSystem(requestParam.getDefaultHeader().getOriginatingSourceSystem());
+        requestID.setApiVersion(requestParam.getDefaultHeader().getApiVersion());
+        requestID.setTimestamp(timestamp);
         return requestID;
     }
 
